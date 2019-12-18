@@ -7,17 +7,14 @@ function ScheduleFetcher(props){
     let [isLoading, setIsLoading] = useState(true);
     let [data, setData] = useState(null);
     useEffect(()=>{
-        fetch("http://casper.roxburylatin.org/getSched/20191023")
+        fetch("http://casper.roxburylatin.org/getSched/20191024")
         .then(res=> res.json())
         .then(resJSON => {
             processedData = processData(resJSON);
-            console.log(processedData)
             setData(processedData);
             setIsLoading(false);
         })
-        .catch(error=>{
-            console.log(error)
-        })
+        .catch(error=> console.log(error))
     },[])
    
     if (isLoading) return <ActivityIndicator animating={true} color={Colors.red800} />

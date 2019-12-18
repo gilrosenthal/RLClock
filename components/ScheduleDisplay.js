@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
-import { Headline, List, Title } from 'react-native-paper';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { List, Title } from 'react-native-paper';
+import {ScrollView, StyleSheet} from 'react-native';
 import MaterialLetter from './MaterialLetter';
-import {showTime} from './TimeTools';
+import {showTime, getCurrentPeriod} from './TimeTools';
 function ScheduleDisplay({schedule}){
+  var [timeLeft, setTimeLeft] = useState(()=>getCurrentPeriod(schedule).timeToEnd);
+  var [currentPeriod, setCurrentPeriod] = useState(()=>getCurrentPeriod(schedule).currentPeriod);
+  var timer;
+
+  useEffect(()=>{
+    timer = setInterval(tick,1000)
+    return function cleanup(){
+      clearInterval(timer);
+    }
+  },[])
+
+  function tick(){
+    if(timeLeft <= 0) {
+      setTimeLeft(getCurrentPeriod(schedule).timeToEnd);
+      setCurrentPeriod(getCurrentPeriod(schedule).currentPeriod);
+    }
+    else setTimeLeft(time => time - 1000)
+  }
+
     var periods = [];
     var hr = schedule.periods[0];
     periods.push(
@@ -27,6 +46,8 @@ function ScheduleDisplay({schedule}){
    return (
        <ScrollView >
         <Title style={styles.title}>{schedule.name}</Title>
+        <Title style={styles.timeLeft}>{currentPeriod.name} </Title>
+        <Title style={styles.timeLeft}>{Math.ceil(timeLeft / 60000)} minutes left</Title>
         <List.Section>
         {periods}
         </List.Section>
@@ -34,12 +55,17 @@ function ScheduleDisplay({schedule}){
    )
 }
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
     title: {
+      textAlign: "center",
+      fontSize:20,
+      paddingTop: 10
+    },
+    timeLeft: {
       textAlign: "center",
       fontSize:30,
       paddingTop: 20
-    },
+    }
   });
 
-export default ScheduleDisplay
+export default ScheduleDisplay;
