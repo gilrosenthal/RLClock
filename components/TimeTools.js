@@ -15,9 +15,12 @@ export function showTime(ts) {
     var options = {
         hour: 'numeric',
         minute: 'numeric',
-        hour12: true
+        hour12: false
     };
-    return new Date(ts).toLocaleString('en-us', options).split(" ")[3].split(":").slice(0, -1).join(":")
+    var hm = new Date(ts).toLocaleString('en-us', options).split(" ")[3].split(":");
+    var hrs = parseInt(hm[0]);
+    if(hrs > 12) hrs = hrs - 12;
+    return hrs + ":" + hm[1];
 }
 
 export function getCurrentPeriod(schedule) {
@@ -33,15 +36,48 @@ export function getCurrentPeriod(schedule) {
     if (!currentPeriod) {
         if (currentTS >= schedule.periods.slice(-1).pop().end) return { currentPeriod: { name: "After School" } }
         else {
-            var nextPeriod = schedule.periods.reduce((previous, current) => {
-                if (current.start >= currentTS) {
-                    if (!previous || current.start >= previous.start) return current;
-                    else return previous;
-                }
-                else return previous;
+            var n = Object.assign({},schedule).periods.filter(p=>p.start >= new Date()).reduce((p,c)=>{
+                if(!p) return c;
+                if(p.start >= c.start) return c;
+                else return p;
             })
-            return { currentPeriod: "Passing Period", timeToEnd: nextPeriod.start - currentTS }
+            return { currentPeriod: {name:"Passing Period"}, timeToEnd: n.start - new Date() }
         }
     }
-    else return { currentPeriod: currentPeriod, timeToEnd: timeToEnd }
+    else {
+        var c = Object.assign({},currentPeriod);
+        c.name = c.block + " - " + c.name + " Period" 
+        return { currentPeriod: c, timeToEnd: timeToEnd }
+    }
+}
+
+export function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join();
+}
+
+export function showDate(date){
+    var year = date.substring(0,4)
+    var month = date.substring(4,6);
+    var day = date.substring(6,8);
+    return month+"/"+day+"/"+year
+}
+
+export function showDayType(sched){
+    var firstBlock = sched.periods.filter(el=>!!el.block)[0].block;
+    if(sched.name.indexOf("Hall")!==-1){
+        var hallLength = parseInt(sched.name);
+        return (firstBlock + "-" + hallLength + " Day")
+    }
+    else return firstBlock +" Day";
+
 }

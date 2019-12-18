@@ -1,13 +1,20 @@
-import * as React from 'react';
-import { StyleSheet, AppRegistry, SafeAreaView, Platform, StatusBar } from 'react-native';
+import React, {useEffect} from 'react';
+import { StyleSheet, AppRegistry, SafeAreaView, Platform, StatusBar, BackHandler } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
-import MainActivity from './components/MainActivity';
-
+import 'react-native-gesture-handler'
+import AppContainer from './components/Navigator';
 export default function Main() {
+  console.disableYellowBox = true;
+  useEffect(()=>{
+    BackHandler.addEventListener('hardwareBackPress',()=>true);
+    return function cleanup(){
+      BackHandler.removeEventListener('hardwareBackPress', ()=>true);
+    }
+  })
   return (
     <PaperProvider>
       <SafeAreaView style={styles.container}>
-      <MainActivity />
+      <AppContainer />
       </SafeAreaView>
     </PaperProvider>
   );
