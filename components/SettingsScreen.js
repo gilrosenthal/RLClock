@@ -1,36 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { TextInput, Text, Title } from 'react-native-paper';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SettingsContext } from './SettingsContext';
 
 export default function SettingsScreen() {
     var listOfBlocks = 'abcdefgh'.split('');
-
-    return <SettingsContext.Consumer>
-        {({ config, setConfig }) => {
-            function updateSetting(block, cl) {
-                var nc = Object.assign({},config)
-                nc.blocks[block] = cl;
-                setConfig(nc)
-            }
-            var settingsList = [];
-            listOfBlocks.forEach(block => {
-                settingsList.push(<Text key={block}> {block.toUpperCase()} Block Class </Text>)
-                settingsList.push(<TextInput
-                    placeholder={"Currently Empty"}
-                    mode={'outlined'}
-                    key={`${block}.input`}
-                    onChangeText={text => updateSetting(block, text)}
-                />)
-            })
-            if (settingsList.length !== 0) return <ScrollView>
-                <Title style={styles.title}>Settings</Title>
-                {settingsList}
-            </ScrollView>
-            else return null;
-
-        }}
-    </SettingsContext.Consumer>
+    var { config, setConfig } = useContext(SettingsContext);
+    // var inputRefs = [];
+    function updateSetting(block, cl) {
+        config.blocks[block] = cl;
+        setConfig(config)
+    }
+    var settingsList = [];
+    listOfBlocks.forEach(block => {
+        settingsList.push(<Text key={block}> {block.toUpperCase()} Block Class </Text>)
+        settingsList.push(<TextInput
+            placeholder={"Currently Empty"}
+            mode={'outlined'}
+            key={`${block}.input`}
+            // ref={(ref) => inputRefs[block] = ref}
+            onSubmitEditing={({nativeEvent}) => updateSetting(block, nativeEvent.text)}
+        />)
+    })
+    // console.log(inputRefs)
+    if (settingsList.length !== 0) return <ScrollView>
+        <Title style={styles.title}>Settings</Title>
+        {settingsList}
+    </ScrollView>
+    else return null;
 
 }
 

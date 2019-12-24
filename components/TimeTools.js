@@ -74,7 +74,7 @@ export function showDate(date){
 
 export function showDayType(sched){
     var firstBlock = sched.periods.filter(el=>!!el.block)[0].block;
-    if(sched.name.indexOf("Hall")!==-1){
+    if(sched.name.indexOf("Hall")!==-1 && sched.name.indexOf("No")===-1){
         var hallLength = parseInt(sched.name);
         return (firstBlock + "-" + hallLength + " Day")
     }

@@ -13,6 +13,9 @@ export default function Main() {
 
   useEffect(() => {
     AsyncStorage.setItem("blocks", JSON.stringify(config));
+    AsyncStorage.getItem("blocks").then(val => {
+      if (val) config = JSON.parse(val);
+    })
     BackHandler.addEventListener('hardwareBackPress', () => true);
     return function cleanup() {
       BackHandler.removeEventListener('hardwareBackPress', () => true);
@@ -24,9 +27,7 @@ export default function Main() {
     AsyncStorage.setItem("blocks", JSON.stringify(config));
   }
 
-  AsyncStorage.getItem("blocks").then(val => {
-    if (val) config = JSON.parse(val);
-  })
+  
 
   return (
     <PaperProvider>
