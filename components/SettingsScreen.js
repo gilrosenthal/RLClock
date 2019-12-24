@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TextInput, Text, Title } from 'react-native-paper';
-import { AsyncStorage } from 'react-native';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SettingsContext } from './SettingsContext';
 

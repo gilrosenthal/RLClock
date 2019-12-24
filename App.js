@@ -5,11 +5,14 @@ import 'react-native-gesture-handler'
 import { SettingsContext } from './components/SettingsContext';
 import AppContainer from './components/Navigator';
 export default function Main() {
-  var config = {blocks:{}};
+  var config =   {
+    blocks: {},
+    calendarDate:""
+  };
   console.disableYellowBox = true;
 
   useEffect(() => {
-    AsyncStorage.setItem("blocks", JSON.stringify({blocks:{}}));
+    AsyncStorage.setItem("blocks", JSON.stringify(config));
     BackHandler.addEventListener('hardwareBackPress', () => true);
     return function cleanup() {
       BackHandler.removeEventListener('hardwareBackPress', () => true);
