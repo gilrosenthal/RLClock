@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.gilrosenthal.rlclock"
+    },
+    "android":{
+      "package":"com.gilrosenthal.rlclock"
     }
   }
 }

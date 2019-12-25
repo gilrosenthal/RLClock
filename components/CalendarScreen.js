@@ -4,7 +4,6 @@ import { Appbar } from 'react-native-paper';
 import { Calendar } from 'react-native-calendars';
 import ScheduleFetcher from './ScheduleFetcher';
 function padDate(day) {
-    console.log(day)
     if (("" + day).length !== 2) return "0" + day
     else return day;
 }

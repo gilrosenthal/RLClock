@@ -1,8 +1,48 @@
 import React from 'react';
-export const SettingsContext = React.createContext({
-    config: {
-        blocks: {},
-        calendarDate:""
+
+export const initialValue = {
+    blocks: {
+        a: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
+        b: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
+        c: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
+        d: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
+        e: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
+        f: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
+        g: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
+        h: {
+            name: "",
+            isFree: false,
+            lunchType:0
+        },
     },
-    setConfig: () => { }
-});
+    calendarDate: ""
+}
+export const SettingsContext = React.createContext(initialValue);

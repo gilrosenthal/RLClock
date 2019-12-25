@@ -39,7 +39,7 @@ function ScheduleDisplay({ schedule }) {
     schedule.periods.slice(1).forEach(p => {
       periods.push(
         <List.Item
-          title={`${p.block && config.blocks[p.block.toLowerCase()] ? config.blocks[p.block.toLowerCase()] + " - " : ""}${p.name}`}
+          title={`${p.block && config.blocks[p.block.toLowerCase()].name ? config.blocks[p.block.toLowerCase()].name + " - " : ""}${p.name}`}
           key={p.name}
           description={showTime(p.start) + " - " + showTime(p.end)}
           left={p.block ? props => <MaterialLetter {...props} letter={p.block} /> : props => <Entypo size={40} name="modern-mic" />}
