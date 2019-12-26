@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { List, Title } from 'react-native-paper';
-import { ScrollView, StyleSheet } from 'react-native';
 import MaterialLetter from './MaterialLetter';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { showTime, getCurrentPeriod, formatDate, showDate, showDayType } from './Tools';
+import { showTime, getCurrentPeriod, formatDate, showDate, showDayType, styles } from './Tools';
 import { SettingsContext } from './SettingsContext';
 
 function ScheduleDisplay({ schedule }) {
@@ -36,10 +35,10 @@ function ScheduleDisplay({ schedule }) {
         left={props => <Entypo size={40} name="home" />}
       />
     )
-    schedule.periods.slice(1).forEach(p => {
+    schedule.periods.slice(1).forEach((p, i) => {
       periods.push(
         <List.Item
-          title={`${p.block && config.blocks[p.block.toLowerCase()].name ? config.blocks[p.block.toLowerCase()].name + " - " : ""}${p.name}`}
+          title={`${p.name}`}
           key={p.name}
           description={showTime(p.start) + " - " + showTime(p.end)}
           left={p.block ? props => <MaterialLetter {...props} letter={p.block} /> : props => <Entypo size={40} name="modern-mic" />}
@@ -74,18 +73,5 @@ function ScheduleDisplay({ schedule }) {
     )
   }
 }
-
-var styles = StyleSheet.create({
-  title: {
-    textAlign: "center",
-    fontSize: 20,
-    paddingTop: 10
-  },
-  timeLeft: {
-    textAlign: "center",
-    fontSize: 30,
-    paddingTop: 20
-  }
-});
 
 export default ScheduleDisplay;

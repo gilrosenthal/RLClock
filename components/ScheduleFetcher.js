@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import ScheduleDisplay from './ScheduleDisplay';
 import { processData, formatDate } from './Tools';
+import { SettingsContext } from './SettingsContext';
+
 function ScheduleFetcher({ day }) {
     let [isLoading, setIsLoading] = useState(true);
     let [data, setData] = useState(null);
+    var {config} = useContext(SettingsContext)
     var url;
     if (!day) url = "http://casper.roxburylatin.org/getSched/20191211"
     else url = `http://casper.roxburylatin.org/getSched/${day}`
@@ -18,7 +21,7 @@ function ScheduleFetcher({ day }) {
                     setData(null);
                 }
                 else {
-                    processedData = processData(resJSON);
+                    processedData = processData(resJSON, config);
                     processedData.date = day ? day : formatDate();
                     setData(processedData);
                     setIsLoading(false);

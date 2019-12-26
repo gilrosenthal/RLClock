@@ -11,7 +11,6 @@ export default function Main() {
 
   useEffect(() => {
     AsyncStorage.getItem("blocks").then(val => {
-      console.log(val)
       if (val) setConfig(JSON.parse(val));
     })
     BackHandler.addEventListener('hardwareBackPress', () => true);

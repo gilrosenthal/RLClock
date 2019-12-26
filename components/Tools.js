@@ -1,13 +1,57 @@
-export function processData(data) {
+import { StyleSheet } from 'react-native';
+
+export function processData(data, config) {
+    var lunchPeriod = data.periods.findIndex(el=>el.name.indexOf("Lunch")!==-1)
+
+    var processedPeriods = data.periods.map((period,index) => {
+        
+        if(period.block && config.blocks[period.block.toLowerCase()].isFree) period.name = "Free - " + showPeriodNumber(period.period);
+        else if(period.block && config.blocks[period.block.toLowerCase()].name) period.name = config.blocks[period.block.toLowerCase()].name + " - "  + showPeriodNumber(period.period);
+        
+        var s = period.start.split(":").map(el => parseInt(el));
+        var e = period.end.split(":").map(el => parseInt(el))
+        period.start = new Date().setHours(s[0], s[1], 0, 0);
+        period.end = new Date().setHours(e[0], e[1], 0, 0);
+        
+        return period;
+    });
+
+    if(config.blocks[processedPeriods[lunchPeriod].block.toLowerCase()].isFree){
+        var megaLunch = {
+            block: processedPeriods[lunchPeriod].block,
+            name: "Lunch " + processedPeriods[lunchPeriod].name.replace("- First Lunch",""),
+            period: processedPeriods[lunchPeriod].period,
+            start:processedPeriods[lunchPeriod].start,
+            end:processedPeriods[lunchPeriod+2].end
+        };
+        processedPeriods.splice(lunchPeriod,3)
+        processedPeriods.splice(lunchPeriod,0,megaLunch)
+        
+    }
+    else if(config.blocks[processedPeriods[lunchPeriod].block.toLowerCase()].lunchType === 1) {
+        var firstLunch = {
+                block: processedPeriods[lunchPeriod].block,
+                name: "First Lunch - " + showPeriodNumber(processedPeriods[lunchPeriod].period),
+                period: processedPeriods[lunchPeriod].period,
+                start: processedPeriods[lunchPeriod].start,
+                end: processedPeriods[lunchPeriod].end
+            };
+            var clss = {
+                block: processedPeriods[lunchPeriod].block,
+                name: processedPeriods[lunchPeriod].name.replace("- First Lunch",""),
+                period: processedPeriods[lunchPeriod].period,
+                start: processedPeriods[lunchPeriod].end,
+                end:processedPeriods[lunchPeriod+2].end
+            }
+            processedPeriods.splice(lunchPeriod,3)
+            processedPeriods.splice(lunchPeriod,0,clss)
+            processedPeriods.splice(lunchPeriod,0,firstLunch)
+
+        }
+
     return {
         name: data.name,
-        periods: data.periods.map(period => {
-            var s = period.start.split(":").map(el => parseInt(el));
-            var e = period.end.split(":").map(el => parseInt(el))
-            period.start = new Date().setHours(s[0], s[1], 0, 0);
-            period.end = new Date().setHours(e[0], e[1], 0, 0);
-            return period;
-        })
+        periods: processedPeriods
     }
 }
 
@@ -88,3 +132,35 @@ export function showLunchType(type){
         case 2: return "Second Lunch";
     }
 }
+
+export function showPeriodNumber(period){
+    switch(period){
+        case 0: return "";
+        case 1: return "1st";
+        case 2: return "2nd";
+        case 3: return "3rd";
+        case 4: return "4th";
+        case 5: return "5th";
+        case 6: return "6th";
+        case 7: return "7th";
+    }
+}
+
+export const styles = StyleSheet.create({
+    title: {
+      textAlign: "center",
+      fontSize: 20,
+      paddingTop: 10
+    },
+    timeLeft: {
+      textAlign: "center",
+      fontSize: 30,
+      paddingTop: 20
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 8,
+    }
+  });
