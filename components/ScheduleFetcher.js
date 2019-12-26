@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import ScheduleDisplay from './ScheduleDisplay';
-import { processData, formatDate } from './TimeTools';
+import { processData, formatDate } from './Tools';
 function ScheduleFetcher({ day }) {
     let [isLoading, setIsLoading] = useState(true);
     let [data, setData] = useState(null);

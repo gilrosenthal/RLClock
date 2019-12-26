@@ -10,11 +10,12 @@ export default function Main() {
   console.warn = () => { };
 
   useEffect(() => {
-    AsyncStorage.setItem("blocks", JSON.stringify(config));
     AsyncStorage.getItem("blocks").then(val => {
+      console.log(val)
       if (val) setConfig(JSON.parse(val));
     })
     BackHandler.addEventListener('hardwareBackPress', () => true);
+
     return function cleanup() {
       BackHandler.removeEventListener('hardwareBackPress', () => true);
     }
@@ -22,7 +23,7 @@ export default function Main() {
 
   function setConf(newConf) {
     setConfig(newConf)
-    AsyncStorage.setItem("blocks", JSON.stringify(config));
+    AsyncStorage.setItem("blocks", JSON.stringify(newConf));
   }
 
   return (

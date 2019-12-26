@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState,  } from 'react';
 import { TextInput, List, Switch, Menu, Title, Paragraph, Button } from 'react-native-paper';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SettingsContext } from './SettingsContext';
-import { showLunchType } from './TimeTools';
+import { showLunchType } from './Tools';
 
 export default function SettingsScreen() {
     var listOfBlocks = 'abcdefgh'.split('');

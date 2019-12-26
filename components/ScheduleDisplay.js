@@ -3,7 +3,7 @@ import { List, Title } from 'react-native-paper';
 import { ScrollView, StyleSheet } from 'react-native';
 import MaterialLetter from './MaterialLetter';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { showTime, getCurrentPeriod, formatDate, showDate, showDayType } from './TimeTools';
+import { showTime, getCurrentPeriod, formatDate, showDate, showDayType } from './Tools';
 import { SettingsContext } from './SettingsContext';
 
 function ScheduleDisplay({ schedule }) {
