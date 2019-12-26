@@ -79,5 +79,12 @@ export function showDayType(sched){
         return (firstBlock + "-" + hallLength + " Day")
     }
     else return firstBlock +" Day";
+}
 
+export function showLunchType(type){
+    switch(type){
+        case 0: return 'Unconfigured';
+        case 1: return 'First Lunch';
+        case 2: return "Second Lunch";
+    }
 }

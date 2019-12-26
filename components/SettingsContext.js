@@ -5,7 +5,7 @@ export const initialValue = {
         a: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType:0 // 0 means not configured, 1 means first lunch, 2 means second lunch
         },
         b: {
             name: "",

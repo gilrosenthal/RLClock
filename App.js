@@ -5,9 +5,9 @@ import 'react-native-gesture-handler'
 import { SettingsContext, initialValue } from './components/SettingsContext';
 import AppContainer from './components/Navigator';
 export default function Main() {
-  var [config, setConfig] = useState(Object.assign({},initialValue));
+  var [config, setConfig] = useState(Object.assign({}, initialValue));
   console.disableYellowBox = true;
-  console.warn = ()=>{};
+  console.warn = () => { };
 
   useEffect(() => {
     AsyncStorage.setItem("blocks", JSON.stringify(config));
@@ -18,7 +18,7 @@ export default function Main() {
     return function cleanup() {
       BackHandler.removeEventListener('hardwareBackPress', () => true);
     }
-  },[])
+  }, [])
 
   function setConf(newConf) {
     setConfig(newConf)
