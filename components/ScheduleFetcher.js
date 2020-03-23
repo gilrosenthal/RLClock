@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import ScheduleDisplay from './ScheduleDisplay';
 import { processData, formatDate } from './Tools';
-import { SettingsContext } from './SettingsContext';
 
-function ScheduleFetcher({ day }) {
+function ScheduleFetcher({ config, day }) {
     let [isLoading, setIsLoading] = useState(true);
     let [data, setData] = useState(null);
-    var {config} = useContext(SettingsContext)
     var url;
-    if (!day) url = "http://casper.roxburylatin.org/getSched/20191211"
+    if (!day) url = "http://casper.roxburylatin.org/getSched/20200330"
     else url = `http://casper.roxburylatin.org/getSched/${day}`
     useEffect(() => {
         fetch(url)
@@ -31,7 +29,7 @@ function ScheduleFetcher({ day }) {
     }, [])
 
     if (isLoading) return <ActivityIndicator animating={true} color={Colors.red800} />
-    else return <View><ScheduleDisplay schedule={data} /></View>
+    else return <ScrollView><ScheduleDisplay schedule={data} /></ScrollView>
 }
 
 export default ScheduleFetcher;

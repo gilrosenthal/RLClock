@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, AppRegistry, SafeAreaView, AsyncStorage, StatusBar, BackHandler } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
-import 'react-native-gesture-handler'
-import { SettingsContext, initialValue } from './components/SettingsContext';
+import 'react-native-gesture-handler';
+import {initialValue} from './components/Tools';
 import AppContainer from './components/Navigator';
 export default function Main() {
   var [config, setConfig] = useState(Object.assign({}, initialValue));
@@ -21,16 +21,14 @@ export default function Main() {
   }, [])
 
   function setConf(newConf) {
-    setConfig(newConf)
+    setConfig(conf=>newConf)
     AsyncStorage.setItem("blocks", JSON.stringify(newConf));
   }
 
   return (
     <PaperProvider>
       <SafeAreaView style={styles.container}>
-        <SettingsContext.Provider value={{ config: config, setConfig: setConf }}>
-          <AppContainer />
-        </SettingsContext.Provider>
+          <AppContainer config={config} setConfig={setConf}/>
       </SafeAreaView>
     </PaperProvider>
   );

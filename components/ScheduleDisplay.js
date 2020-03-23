@@ -3,17 +3,14 @@ import { List, Title } from 'react-native-paper';
 import MaterialLetter from './MaterialLetter';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { showTime, getCurrentPeriod, formatDate, showDate, showDayType, styles } from './Tools';
-import { SettingsContext } from './SettingsContext';
 
 function ScheduleDisplay({ schedule }) {
   if (!schedule || Object.entries(schedule).length === 0) return <Title style={styles.title}>No School</Title>
   else {
-    var { config, setConfig } = useContext(SettingsContext);
 
-    var [timeLeft, setTimeLeft] = useState(() => getCurrentPeriod(schedule).timeToEnd);
+    var [timeLeft, setTimeLeft] = useState(0);
     var [currentPeriod, setCurrentPeriod] = useState(() => getCurrentPeriod(schedule).currentPeriod);
     var timer;
-
     function tick() {
       if (timeLeft <= 0) {
         setTimeLeft(getCurrentPeriod(schedule).timeToEnd);
@@ -39,7 +36,7 @@ function ScheduleDisplay({ schedule }) {
       periods.push(
         <List.Item
           title={`${p.name}`}
-          key={p.name}
+          key={`${p.name}${i}`}
           description={showTime(p.start) + " - " + showTime(p.end)}
           left={p.block ? props => <MaterialLetter {...props} letter={p.block} /> : props => <Entypo size={40} name="modern-mic" />}
         />

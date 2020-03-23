@@ -1,13 +1,11 @@
-import React, { useContext, useState, } from 'react';
+import React, { useState, } from 'react';
 import { TextInput, List, Switch, Menu, Title, Paragraph, Button } from 'react-native-paper';
 import { ScrollView, View } from 'react-native';
-import { SettingsContext } from './SettingsContext';
 import { showLunchType, styles } from './Tools';
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ config, setConfig }) {
     var listOfBlocks = 'abcdefgh'.split('');
     var [menuOpen, setMenuOpen] = useState({});
-    var { config, setConfig } = useContext(SettingsContext);
 
     function updateBlockProp(block, val, prop) {
         var nc = Object.assign({}, config)
@@ -45,7 +43,7 @@ export default function SettingsScreen() {
                         style={{ width: "95%" }}
                         onSubmitEditing={({ nativeEvent }) => updateBlockProp(block, nativeEvent.text, "name")}
                     />
-                    
+
                     <View style={styles.row}>
                         <Paragraph>Lunch Type</Paragraph>
                         <Menu
@@ -62,5 +60,4 @@ export default function SettingsScreen() {
             </List.Accordion>
         )}
     </ScrollView>
-
 }
