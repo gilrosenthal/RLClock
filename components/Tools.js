@@ -90,7 +90,7 @@ export function showTime(ts) {
     };
     var hm = new Date(ts).toLocaleString('en-us', options).split(" ")[3].split(":");
     var hrs = parseInt(hm[0]);
-    if (hrs > 12) hrs =- 12;
+    if (hrs > 12) hrs = hrs - 12;
     return hrs + ":" + hm[1];
 }
 
