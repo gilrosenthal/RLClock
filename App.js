@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, AppRegistry, SafeAreaView, AsyncStorage, StatusBar, BackHandler } from 'react-native';
+import { AppRegistry, SafeAreaView, AsyncStorage, BackHandler } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import 'react-native-gesture-handler';
-import {initialValue} from './components/Tools';
+import { initialValue, styles } from './components/Tools';
 import AppContainer from './components/Navigator';
 export default function Main() {
   var [config, setConfig] = useState(Object.assign({}, initialValue));
@@ -21,22 +21,16 @@ export default function Main() {
   }, [])
 
   function setConf(newConf) {
-    setConfig(conf=>newConf)
+    setConfig(newConf)
     AsyncStorage.setItem("blocks", JSON.stringify(newConf));
   }
-
   return (
     <PaperProvider>
       <SafeAreaView style={styles.container}>
-          <AppContainer config={config} setConfig={setConf}/>
+        <AppContainer config={config} setConfig={setConf} />
       </SafeAreaView>
     </PaperProvider>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight
-  },
-});
+
 AppRegistry.registerComponent('main', () => Main);

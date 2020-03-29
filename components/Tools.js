@@ -1,14 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,StatusBar } from 'react-native';
 
 export function processData(data, config) {
-    var lunchPeriod = data.periods.findIndex(el => el.name.indexOf("Lunch") !== -1)
-
     var processedPeriods = data.periods.map(period => {
-        //If free period
-        if (period.block && config.blocks[period.block.toLowerCase()].isFree) period.name = "Free - " + showPeriodNumber(period.period);
+
+        if (period.block && period.block !== "Lunch" && config.blocks[period.block.toLowerCase()].isFree) period.name = "Free - " + showPeriodNumber(period.period);
 
         //If not free and has been named
-        else if (period.block && config.blocks[period.block.toLowerCase()].name) period.name = config.blocks[period.block.toLowerCase()].name + " - " + showPeriodNumber(period.period);
+        else if (period.block && period.block !== "Lunch" && config.blocks[period.block.toLowerCase()].name) period.name = config.blocks[period.block.toLowerCase()].name + " - " + showPeriodNumber(period.period);
 
         //Some string/date work to convert their format into Date objectys
         var s = period.start.split(":").map(el => parseInt(el)); //
@@ -18,67 +16,9 @@ export function processData(data, config) {
 
         return period;
     });
-
-    processLunch(processedPeriods, lunchPeriod, config);
-
     return {
         name: data.name,
         periods: processedPeriods
-    }
-}
-
-export function processLunch(processedPeriods, lunchPeriod, config) {
-    //If lunch period is free, reduce all 3 into mega lunch
-    if (config.blocks[processedPeriods[lunchPeriod].block.toLowerCase()].isFree) {
-        var megaLunch = {
-            block: processedPeriods[lunchPeriod].block,
-            name: "Lunch " + processedPeriods[lunchPeriod].name.replace("- First Lunch", ""),
-            period: processedPeriods[lunchPeriod].period,
-            start: processedPeriods[lunchPeriod].start,
-            end: processedPeriods[lunchPeriod + 2].end
-        };
-        processedPeriods.splice(lunchPeriod, 3)
-        processedPeriods.splice(lunchPeriod, 0, megaLunch)
-
-    }
-    else if (config.blocks[processedPeriods[lunchPeriod].block.toLowerCase()].lunchType === 1) {
-        var firstLunch = {
-            block: processedPeriods[lunchPeriod].block,
-            name: "First Lunch - " + showPeriodNumber(processedPeriods[lunchPeriod].period),
-            period: processedPeriods[lunchPeriod].period,
-            start: processedPeriods[lunchPeriod].start,
-            end: processedPeriods[lunchPeriod].end
-        };
-        var secondHalfClass = {
-            block: processedPeriods[lunchPeriod].block,
-            name: processedPeriods[lunchPeriod].name.replace("- First Lunch", ""),
-            period: processedPeriods[lunchPeriod].period,
-            start: processedPeriods[lunchPeriod].end,
-            end: processedPeriods[lunchPeriod + 2].end
-        }
-        processedPeriods.splice(lunchPeriod, 3)
-        processedPeriods.splice(lunchPeriod, 0, secondHalfClass)
-        processedPeriods.splice(lunchPeriod, 0, firstLunch)
-
-    }
-    else if (config.blocks[processedPeriods[lunchPeriod].block.toLowerCase()].lunchType === 2) {
-        var clss = {
-            block: processedPeriods[lunchPeriod].block,
-            name: processedPeriods[lunchPeriod].name.replace("- Second Lunch", ""),
-            period: processedPeriods[lunchPeriod].period,
-            start: processedPeriods[lunchPeriod].start,
-            end: processedPeriods[lunchPeriod + 1].end
-        }
-        var secondLunch = {
-            block: processedPeriods[lunchPeriod].block,
-            name: "Second Lunch - " + showPeriodNumber(processedPeriods[lunchPeriod].period),
-            period: processedPeriods[lunchPeriod].period,
-            start: processedPeriods[lunchPeriod].end,
-            end: processedPeriods[lunchPeriod + 2].end
-        };
-        processedPeriods.splice(lunchPeriod, 3)
-        processedPeriods.splice(lunchPeriod, 0, secondLunch)
-        processedPeriods.splice(lunchPeriod, 0, clss)
     }
 }
 
@@ -112,7 +52,7 @@ export function getCurrentPeriod(schedule) {
                 if (p.start >= c.start) return c;
                 else return p;
             })
-            return { currentPeriod: { name: "Passing Period" }, timeToEnd: n.start - new Date() }
+            return { currentPeriod: { name: "Passing Period",  nextBlock: n }, timeToEnd: n.start - new Date()}
         }
     }
     else {
@@ -176,8 +116,9 @@ export function showPeriodNumber(period) {
 export const styles = StyleSheet.create({
     title: {
         textAlign: "center",
-        fontSize: 20,
-        paddingTop: 10
+        fontSize: 30,
+        paddingTop: 15,
+        justifyContent: 'center',
     },
     timeLeft: {
         textAlign: "center",
@@ -187,9 +128,17 @@ export const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 8,
-    }
+        justifyContent: 'center',
+        paddingBottom: 8,
+        display: 'flex'
+    },
+    spacer:{
+        flexGrow:1
+    },
+    container: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight
+    },
 });
 
 export const initialValue = {

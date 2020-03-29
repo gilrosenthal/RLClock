@@ -2,6 +2,7 @@
   "expo": {
     "name": "RL Clock",
     "slug": "RLClock",
+    "description": "A mobile app to keep track of the RL Schedule",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -12,20 +13,22 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/RoxburyHomescreenIcon.png",
+    "githubUrl": "https://github.com/gilrosenthal/RLClock",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": true
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier":"com.gilrosenthal.rlclock"
+      "bundleIdentifier":"com.gilrosenthal.rlclock",
+      "buildNumber":"1.0.0"
     },
     "android":{
       "package":"com.gilrosenthal.rlclock"

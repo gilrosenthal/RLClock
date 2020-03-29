@@ -1,63 +1,71 @@
 import React, { useState, } from 'react';
-import { TextInput, List, Switch, Menu, Title, Paragraph, Button } from 'react-native-paper';
-import { ScrollView, View } from 'react-native';
-import { showLunchType, styles } from './Tools';
+import { TextInput, List, Switch, Title, Appbar, Button } from 'react-native-paper';
+import { ScrollView, View, BackHandler } from 'react-native';
+import { styles } from './Tools';
+import MaterialLetter from './MaterialLetter';
 
 export default function SettingsScreen({ config, setConfig }) {
     var listOfBlocks = 'abcdefgh'.split('');
-    var [menuOpen, setMenuOpen] = useState({});
+    var [blockEditing, setBlockEditing] = useState("");
+    BackHandler.addEventListener('hardwareBackPress', () => setBlockEditing(""));
+    if (blockEditing != "") return <BlockSettings block={blockEditing} setBlock={setBlockEditing} config={config} setConfig={setConfig} />
+    return <View style={{ flex: 1 }}>
+        <View style={styles.row}>
+            <Title style={styles.title}>Settings</Title>
+        </View>
+        <ScrollView>
+            {listOfBlocks.map(block =>
+                <List.Item
+                    title={`${block.toUpperCase()} Block Settings`}
+                    key={block}
+                    left={props => <MaterialLetter {...props} letter={block.toUpperCase()} />}
+                    right={props => <List.Icon {...props} icon="arrow-right" />}
+                    onPress={() => setBlockEditing(block)}
+                />
+            )}
+        </ScrollView>
+    </View>
+}
 
+function BlockSettings({ block, setBlock, config, setConfig }) {
+    var [cfg, setCfg] = useState(config);
     function updateBlockProp(block, val, prop) {
-        var nc = Object.assign({}, config)
+        var nc = Object.assign({}, cfg);
         nc.blocks[block][prop] = val;
-        setConfig(nc)
+        setCfg(nc);
     }
-    function updateBlockLunch(block, lunch) {
-        updateBlockProp(block, lunch, "lunchType")
-        setMenuOpen(mu => ({ ...mu, [block]: false }))
-    }
-    return <ScrollView>
-        <Title style={styles.title}>Settings</Title>
-        {listOfBlocks.map(block =>
 
-            <List.Accordion
-                title={`${block.toUpperCase()} Block Settings`}
-                key={block}
-                left={props => <List.Icon {...props} icon="folder" />}
-            >
+    return <View>
+        <View style={styles.row}>
+            <Appbar.BackAction onPress={() => setBlock("")} style={{ left: 0, position: "absolute" }} />
+            <Title style={styles.title}>{block.toUpperCase()} Block Settings</Title>
+            <Button style={{ right: 0, position: "absolute" }} onPress={() => {
+                setConfig(cfg);
+                setBlock("");
+            }}>Save</Button>
+        </View>
 
-                <View style={styles.row}>
-                    <Paragraph>Is a Free</Paragraph>
-                    <Switch
-                        value={config.blocks[block].isFree}
-                        onValueChange={val => updateBlockProp(block, val, "isFree")}
-                    />
-                </View>
-                {!config.blocks[block].isFree && <View>
+        <View style={styles.row}>
+            <Title style={{ left: "10%", paddingVertical: 20 }}>Is a Free</Title>
+            <View style={styles.spacer} />
+            <Switch
+                style={{ right: 0, position: "absolute" }}
+                value={cfg.blocks[block].isFree}
+                onValueChange={val => updateBlockProp(block, val, "isFree")}
+            />
+        </View>
+        {!cfg.blocks[block].isFree && <View style={styles.row}>
+            <Title style={{ left: "10%", paddingVertical: 20 }}>Class Name</Title>
+            <View style={styles.spacer} />
+            <TextInput
+                placeholder={`${block.toUpperCase()} Block Class Name`}
+                mode={'outlined'}
+                defaultValue={cfg.blocks[block].name ? cfg.blocks[block].name : null}
+                key={`${block}.input`}
+                style={{ width: "60%", paddingBottom: 20, paddingRight: 10 }}
+                onChangeText={(text) => updateBlockProp(block, text, "name")}
+            />
+        </View>}
+    </View>
 
-                    <TextInput
-                        placeholder={`${block.toUpperCase()} Block Class`}
-                        mode={'outlined'}
-                        defaultValue={config.blocks[block].name ? config.blocks[block].name : null}
-                        key={`${block}.input`}
-                        style={{ width: "95%" }}
-                        onSubmitEditing={({ nativeEvent }) => updateBlockProp(block, nativeEvent.text, "name")}
-                    />
-
-                    <View style={styles.row}>
-                        <Paragraph>Lunch Type</Paragraph>
-                        <Menu
-                            visible={menuOpen[block]}
-                            onDismiss={() => setMenuOpen(mu => ({ ...mu, [block]: false }))}
-                            anchor={
-                                <Button onPress={() => setMenuOpen(mu => ({ ...mu, [block]: true }))}>{showLunchType(config.blocks[block].lunchType)}</Button>}
-                        >
-                            <Menu.Item onPress={() => updateBlockLunch(block, 1)} title="First Lunch" />
-                            <Menu.Item onPress={() => updateBlockLunch(block, 2)} title="Second Lunch" />
-                        </Menu>
-                    </View>
-                </View>}
-            </List.Accordion>
-        )}
-    </ScrollView>
 }
