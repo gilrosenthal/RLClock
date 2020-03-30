@@ -8,8 +8,8 @@ function ScheduleFetcher({ config, day }) {
     let [isLoading, setIsLoading] = useState(true);
     let [data, setData] = useState(null);
     var url;
-    if (!day) url = "http://casper.roxburylatin.org/getSched/20200330"
-    else url = `http://casper.roxburylatin.org/getSched/${day}`
+    if (!day) url = "http://casper.roxburylatin.org/todays_schedule.json";
+    else url = `http://casper.roxburylatin.org/getSched/${day}`;
     useEffect(() => {
         fetch(url)
             .then(res => res.json())
