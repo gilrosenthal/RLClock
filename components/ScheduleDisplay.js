@@ -5,7 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { showTime, getCurrentPeriod, formatDate, showDate, showDayType, styles, iconColor } from './Tools';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function ScheduleDisplay({ darkMode, schedule }) {
+function ScheduleDisplay({ darkMode, schedule, setDate }) {
   if (!schedule || Object.entries(schedule).length === 0) return <Title style={styles.title}>No School</Title>
   else {
 
@@ -61,8 +61,12 @@ function ScheduleDisplay({ darkMode, schedule }) {
       <React.Fragment>
         {schedule.date !== formatDate()
           ? <React.Fragment>
-            <Title style={styles.title(darkMode)}>{showDate(schedule.date)}</Title>
+            <View style={styles.settingsTitleRow(darkMode)}>
+              <Appbar.BackAction icon="back" onPress={() => { setDate("") }} />
+              <Title style={styles.title(darkMode)}>{showDate(schedule.date)}</Title>
+            </View>
             <Title style={styles.title(darkMode)}>{showDayType(schedule)}</Title>
+
           </React.Fragment>
           : <React.Fragment>
             <Title style={styles.currentPeriod}>{currentPeriod.name} </Title>

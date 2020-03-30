@@ -20,7 +20,6 @@ export default function CalendarScreen({ config }) {
         }}
     />
     else return <ScrollView style={styles.periodWrapper(config.darkMode)}>
-        <Appbar.BackAction icon="back" onPress={() => { setDate("") }} />
-        <ScheduleFetcher config={config} day={date} />
+        <ScheduleFetcher config={config} setDate={setDate} day={date} />
     </ScrollView>
 }
