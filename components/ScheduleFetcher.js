@@ -4,7 +4,7 @@ import { ActivityIndicator, Colors } from 'react-native-paper';
 import ScheduleDisplay from './ScheduleDisplay';
 import { processData, formatDate, styles } from './Tools';
 
-function ScheduleFetcher({ config, day }) {
+function ScheduleFetcher({ config, day, setDate }) {
     let [isLoading, setIsLoading] = useState(true);
     let [data, setData] = useState(null);
     var url;
@@ -29,7 +29,6 @@ function ScheduleFetcher({ config, day }) {
     }, [])
 
     if (isLoading) return <ActivityIndicator animating={true} color={Colors.red800} />
-    else return <ScrollView style={styles.periodWrapper(config.darkMode)}><ScheduleDisplay schedule={data} darkMode={config.darkMode} /></ScrollView>
-}
+    else return <ScrollView style={styles.periodWrapper(config.darkMode)}><ScheduleDisplay setDate={setDate} schedule={data} darkMode={config.darkMode} /></ScrollView>}
 
 export default ScheduleFetcher;
