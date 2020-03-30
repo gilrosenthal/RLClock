@@ -6,7 +6,7 @@ export function processData(data, config) {
         if (period.block && period.block !== "Lunch" && config.blocks[period.block.toLowerCase()].isFree) period.name = "Free - " + showPeriodNumber(period.period);
 
         //If not free and has been named
-        else if (period.block && period.block !== "Lunch" && config.blocks[period.block.toLowerCase()].name) period.name = config.blocks[period.block.toLowerCase()].name + " - " + showPeriodNumber(period.period);
+        else if (period.block && period.block !== "Lunch" && config.blocks[period.block.toLowerCase()].name) period.name = config.blocks[period.block.toLowerCase()].name;
 
         //Some string/date work to convert their format into Date objectys
         var s = period.start.split(":").map(el => parseInt(el)); //
@@ -52,12 +52,12 @@ export function getCurrentPeriod(schedule) {
                 if (p.start >= c.start) return c;
                 else return p;
             })
-            return { currentPeriod: { name: "Passing Period",  nextBlock: n }, timeToEnd: n.start - new Date()}
+            return { currentPeriod: { name: `Passing Period before ${n.block}`,  nextBlock: n }, timeToEnd: n.start - new Date()}
         }
     }
     else {
         var c = Object.assign({}, currentPeriod);
-        c.name = c.block + " - " + c.name + " Period"
+        c.name = c.block + " - " + c.name;
         return { currentPeriod: c, timeToEnd: timeToEnd }
     }
 }
@@ -114,16 +114,36 @@ export function showPeriodNumber(period) {
 }
 
 export const styles = StyleSheet.create({
-    title: {
-        textAlign: "center",
-        fontSize: 30,
-        paddingTop: 15,
-        justifyContent: 'center',
+    title: function(darkMode){
+        return {
+            textAlign: "center",
+            fontSize: 30,
+            paddingTop: 8.5,
+            justifyContent: 'center',
+            color: darkMode ? "#f8f8f8" : "#444",
+        }
     },
-    timeLeft: {
+    settingsTitle: function(darkMode){
+        return {
+            textAlign: "center",
+            fontSize: 30,
+            paddingTop: 8.5,
+            justifyContent: 'center',
+            color: darkMode ?  "#f8f8f8" : "#444" ,
+        }
+    },
+    currentPeriod: {
         textAlign: "center",
         fontSize: 30,
-        paddingTop: 20
+        paddingTop: 10,
+        color:"#b5302f"
+    },
+    timeLeft: function(darkMode){
+       return {textAlign: "center",
+        fontSize: 20,
+        paddingTop: 5,
+        color: darkMode ?  "#f8f8f8" : "#444",}
+
     },
     row: {
         flexDirection: 'row',
@@ -132,6 +152,17 @@ export const styles = StyleSheet.create({
         paddingBottom: 8,
         display: 'flex'
     },
+    settingsTitleRow: function(darkMode){
+        return{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingBottom: 8,
+            paddingTop:10,
+            display: 'flex',
+            backgroundColor: darkMode ? "#444" : "#f8f8f8",
+        }
+    },
     spacer:{
         flexGrow:1
     },
@@ -139,6 +170,54 @@ export const styles = StyleSheet.create({
         flex: 1,
         paddingTop: StatusBar.currentHeight
     },
+    timeRange: function(darkMode){
+       return { 
+            fontSize: 15,
+            paddingTop:9,
+            color: darkMode ? "#ccc" : "#595959"
+        }
+
+    },
+    periodWrapper:function(darkMode){
+        return {
+            backgroundColor: darkMode ? "#444" : "#f8f8f8",
+            height:"100%"
+        }
+    },
+    periodItem: function(period, current, darkMode){
+        var s = {
+            backgroundColor: darkMode? "#555555" :  "#fff",
+            marginTop:5,
+            marginRight:7,
+            marginLeft:7,
+            marginBottom:0,
+            padding:3.5,
+            lineHeight:5,
+        };
+        if(period.block != null && period.block === current.block) s.backgroundColor = darkMode? "#959f52" : '#b5cf92';
+        return s;
+    },
+    darkModeSetting: function(darkMode){
+        return{
+            left:"100%",
+            paddingTop: 20,
+            color: darkMode ?  "#f8f8f8" : "#444",
+        }
+    },
+    itemSetting: function(darkMode){
+        return{
+            marginTop: 0,
+            color: darkMode ?  "#f8f8f8" : "#444",
+        }
+    },
+    settingLabel: function(darkMode){
+        return { 
+            left: "10%",
+            paddingVertical: 20,
+            color: darkMode ?  "#f8f8f8" : "#444",
+
+         }
+    }
 });
 
 export const initialValue = {
@@ -147,6 +226,7 @@ export const initialValue = {
             name: "",
             isFree: false,
             lunchType:0 // 0 means not configured, 1 means first lunch, 2 means second lunch
+            //Keeping in for future when remote learning isn't a thing
         },
         b: {
             name: "",
@@ -184,5 +264,6 @@ export const initialValue = {
             lunchType:0
         },
     },
-    calendarDate: ""
+    calendarDate: "",
+    darkMode:false
 }

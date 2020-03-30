@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AppRegistry, SafeAreaView, AsyncStorage, BackHandler } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import { initialValue, styles } from './components/Tools';
 import AppContainer from './components/Navigator';
+
+
 export default function Main() {
   var [config, setConfig] = useState(Object.assign({}, initialValue));
   console.disableYellowBox = true;

@@ -7,19 +7,31 @@ import MaterialLetter from './MaterialLetter';
 export default function SettingsScreen({ config, setConfig }) {
     var listOfBlocks = 'abcdefgh'.split('');
     var [blockEditing, setBlockEditing] = useState("");
+    var cfg = Object.assign({}, config);
     BackHandler.addEventListener('hardwareBackPress', () => setBlockEditing(""));
     if (blockEditing != "") return <BlockSettings block={blockEditing} setBlock={setBlockEditing} config={config} setConfig={setConfig} />
     return <View style={{ flex: 1 }}>
-        <View style={styles.row}>
-            <Title style={styles.title}>Settings</Title>
+        <View style={styles.settingsTitleRow(config.darkMode)}>
+            <Title style={styles.settingsTitle(config.darkMode)}>Settings</Title>
         </View>
-        <ScrollView>
+        <ScrollView style={styles.periodWrapper(config.darkMode)}>
+        <View style={styles.settingsTitleRow(config.darkMode)}>
+            <Title style={styles.darkModeSetting(config.darkMode)}>Dark Mode</Title>
+            <View style={styles.spacer} />
+            <Switch
+                style={{ right: 10, position: "absolute" }}
+                value={cfg.darkMode}
+                onValueChange={val => setConfig({...config, darkMode:val})}
+            />
+        </View>
             {listOfBlocks.map(block =>
                 <List.Item
-                    title={`${block.toUpperCase()} Block Settings`}
+                    title={`Block Settings`}
                     key={block}
-                    left={props => <MaterialLetter {...props} letter={block.toUpperCase()} />}
-                    right={props => <List.Icon {...props} icon="arrow-right" />}
+                    titleStyle={styles.itemSetting(config.darkMode)}
+                    style={styles.itemSetting(config.darkMode)}
+                    left={props => <MaterialLetter {...props} darkMode={config.darkMode} letter={block.toUpperCase()} />}
+                    right={props => <List.Icon {...props} color={config.darkMode? '#fff' : '#000'} icon="arrow-right" />}
                     onPress={() => setBlockEditing(block)}
                 />
             )}
@@ -35,27 +47,27 @@ function BlockSettings({ block, setBlock, config, setConfig }) {
         setCfg(nc);
     }
 
-    return <View>
-        <View style={styles.row}>
-            <Appbar.BackAction onPress={() => setBlock("")} style={{ left: 0, position: "absolute" }} />
-            <Title style={styles.title}>{block.toUpperCase()} Block Settings</Title>
-            <Button style={{ right: 0, position: "absolute" }} onPress={() => {
+    return <View style={styles.periodWrapper(config.darkMode)}>
+        <View style={styles.settingsTitleRow(config.darkMode)}>
+            <Appbar.BackAction color={config.darkMode? '#fff' : '#000'} onPress={() => setBlock("")} style={{ left: 0, position: "absolute" }} />
+            <Title style={styles.settingsTitle(config.darkMode)}>{block.toUpperCase()} Block Settings</Title>
+            <Button mode={"text"} color={config.darkMode? '#fff' : '#000'} style={{ right: 5, position: "absolute" }} onPress={() => {
                 setConfig(cfg);
                 setBlock("");
             }}>Save</Button>
         </View>
 
         <View style={styles.row}>
-            <Title style={{ left: "10%", paddingVertical: 20 }}>Is a Free</Title>
+            <Title style={styles.settingLabel(config.darkMode)}>Is a Free</Title>
             <View style={styles.spacer} />
             <Switch
-                style={{ right: 0, position: "absolute" }}
+                style={{ right: 10, position: "absolute" }}
                 value={cfg.blocks[block].isFree}
                 onValueChange={val => updateBlockProp(block, val, "isFree")}
             />
         </View>
         {!cfg.blocks[block].isFree && <View style={styles.row}>
-            <Title style={{ left: "10%", paddingVertical: 20 }}>Class Name</Title>
+            <Title style={styles.settingLabel(config.darkMode)}>Class Name</Title>
             <View style={styles.spacer} />
             <TextInput
                 placeholder={`${block.toUpperCase()} Block Class Name`}
@@ -63,6 +75,11 @@ function BlockSettings({ block, setBlock, config, setConfig }) {
                 defaultValue={cfg.blocks[block].name ? cfg.blocks[block].name : null}
                 key={`${block}.input`}
                 style={{ width: "60%", paddingBottom: 20, paddingRight: 10 }}
+                theme={{colors:{
+                    background:config.darkMode ?   "#444" : "#f8f8f8", 
+                    text: config.darkMode ?  "#f8f8f8" : "#444",
+                    placeholder:config.darkMode ?  "#f8f8f8" : "#444",
+                }}}
                 onChangeText={(text) => updateBlockProp(block, text, "name")}
             />
         </View>}
