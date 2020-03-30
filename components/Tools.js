@@ -1,4 +1,4 @@
-import { StyleSheet,StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 
 export function processData(data, config) {
     var processedPeriods = data.periods.map(period => {
@@ -52,7 +52,7 @@ export function getCurrentPeriod(schedule) {
                 if (p.start >= c.start) return c;
                 else return p;
             })
-            return { currentPeriod: { name: `Passing Period before ${n.block}`,  nextBlock: n }, timeToEnd: n.start - new Date()}
+            return { currentPeriod: { name: `Passing Period before ${n.block}`, nextBlock: n }, timeToEnd: n.start - new Date() }
         }
     }
     else {
@@ -114,37 +114,25 @@ export function showPeriodNumber(period) {
 }
 
 export const styles = StyleSheet.create({
-    title: function(darkMode){
-        return {
-            textAlign: "center",
-            fontSize: 30,
-            paddingTop: 8.5,
-            justifyContent: 'center',
-            color: darkMode ? "#f8f8f8" : "#444",
-        }
-    },
-    settingsTitle: function(darkMode){
-        return {
-            textAlign: "center",
-            fontSize: 30,
-            paddingTop: 8.5,
-            justifyContent: 'center',
-            color: darkMode ?  "#f8f8f8" : "#444" ,
-        }
-    },
+    title: darkMode => ({
+        textAlign: "center",
+        fontSize: 30,
+        paddingTop: 8.5,
+        justifyContent: 'center',
+        color: darkMode ? "#f8f8f8" : "#444",
+    }),
     currentPeriod: {
         textAlign: "center",
         fontSize: 30,
         paddingTop: 10,
-        color:"#b5302f"
+        color: "#b5302f"
     },
-    timeLeft: function(darkMode){
-       return {textAlign: "center",
+    timeLeft: darkMode => ({
+        textAlign: "center",
         fontSize: 20,
         paddingTop: 5,
-        color: darkMode ?  "#f8f8f8" : "#444",}
-
-    },
+        color: darkMode ? "#f8f8f8" : "#444"
+    }),
     row: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -152,72 +140,58 @@ export const styles = StyleSheet.create({
         paddingBottom: 8,
         display: 'flex'
     },
-    settingsTitleRow: function(darkMode){
-        return{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingBottom: 8,
-            paddingTop:10,
-            display: 'flex',
-            backgroundColor: darkMode ? "#444" : "#f8f8f8",
-        }
-    },
-    spacer:{
-        flexGrow:1
+    settingsTitleRow: darkMode => ({
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom: 8,
+        paddingTop: 10,
+        display: 'flex',
+        backgroundColor: darkMode ? "#444" : "#f8f8f8",
+    }),
+    spacer: {
+        flexGrow: 1
     },
     container: {
         flex: 1,
         paddingTop: StatusBar.currentHeight
     },
-    timeRange: function(darkMode){
-       return { 
-            fontSize: 15,
-            paddingTop:9,
-            color: darkMode ? "#ccc" : "#595959"
-        }
-
-    },
-    periodWrapper:function(darkMode){
-        return {
-            backgroundColor: darkMode ? "#444" : "#f8f8f8",
-            height:"100%"
-        }
-    },
-    periodItem: function(period, current, darkMode){
+    timeRange: darkMode => ({
+        fontSize: 15,
+        paddingTop: 9,
+        color: darkMode ? "#ccc" : "#595959"
+    }),
+    periodWrapper: darkMode => ({
+        backgroundColor: darkMode ? "#444" : "#f8f8f8",
+        height: "100%"
+    }),
+    periodItem: (period, current, darkMode) => {
         var s = {
-            backgroundColor: darkMode? "#555555" :  "#fff",
-            marginTop:5,
-            marginRight:7,
-            marginLeft:7,
-            marginBottom:0,
-            padding:3.5,
-            lineHeight:5,
+            backgroundColor: darkMode ? "#555555" : "#fff",
+            marginTop: 5,
+            marginRight: 7,
+            marginLeft: 7,
+            marginBottom: 0,
+            padding: 3.5,
+            lineHeight: 5,
         };
-        if(period.block != null && period.block === current.block) s.backgroundColor = darkMode? "#959f52" : '#b5cf92';
+        if (period.block != null && period.block === current.block) s.backgroundColor = darkMode ? "#959f52" : '#b5cf92';
         return s;
     },
-    darkModeSetting: function(darkMode){
-        return{
-            left:"100%",
-            paddingTop: 20,
-            color: darkMode ?  "#f8f8f8" : "#444",
-        }
-    },
-    itemSetting: function(darkMode){
-        return{
-            marginTop: 0,
-            color: darkMode ?  "#f8f8f8" : "#444",
-        }
-    },
-    settingLabel: function(darkMode){
-        return { 
-            left: "10%",
-            paddingVertical: 20,
-            color: darkMode ?  "#f8f8f8" : "#444",
-
-         }
-    }
+    darkModeSetting: darkMode => ({
+        left: "100%",
+        paddingTop: 20,
+        color: darkMode ? "#f8f8f8" : "#444",
+    }),
+    itemSetting: darkMode => ({
+        marginTop: 0,
+        color: darkMode ? "#f8f8f8" : "#444",
+    }),
+    settingLabel: darkMode => ({
+        left: "10%",
+        paddingVertical: 20,
+        color: darkMode ? "#f8f8f8" : "#444",
+    })
 });
 
 export const initialValue = {
@@ -225,45 +199,45 @@ export const initialValue = {
         a: {
             name: "",
             isFree: false,
-            lunchType:0 // 0 means not configured, 1 means first lunch, 2 means second lunch
+            lunchType: 0 // 0 means not configured, 1 means first lunch, 2 means second lunch
             //Keeping in for future when remote learning isn't a thing
         },
         b: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType: 0
         },
         c: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType: 0
         },
         d: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType: 0
         },
         e: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType: 0
         },
         f: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType: 0
         },
         g: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType: 0
         },
         h: {
             name: "",
             isFree: false,
-            lunchType:0
+            lunchType: 0
         },
     },
     calendarDate: "",
-    darkMode:false
+    darkMode: false
 }

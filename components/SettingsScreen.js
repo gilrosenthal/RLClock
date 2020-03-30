@@ -12,10 +12,10 @@ export default function SettingsScreen({ config, setConfig }) {
     if (blockEditing != "") return <BlockSettings block={blockEditing} setBlock={setBlockEditing} config={config} setConfig={setConfig} />
     return <View style={{ flex: 1 }}>
         <View style={styles.settingsTitleRow(config.darkMode)}>
-            <Title style={styles.settingsTitle(config.darkMode)}>Settings</Title>
+            <Title style={styles.title(config.darkMode)}>Settings</Title>
         </View>
         <ScrollView style={styles.periodWrapper(config.darkMode)}>
-        <View style={styles.settingsTitleRow(config.darkMode)}>
+        <View style={styles.row}>
             <Title style={styles.darkModeSetting(config.darkMode)}>Dark Mode</Title>
             <View style={styles.spacer} />
             <Switch
@@ -50,7 +50,7 @@ function BlockSettings({ block, setBlock, config, setConfig }) {
     return <View style={styles.periodWrapper(config.darkMode)}>
         <View style={styles.settingsTitleRow(config.darkMode)}>
             <Appbar.BackAction color={config.darkMode? '#fff' : '#000'} onPress={() => setBlock("")} style={{ left: 0, position: "absolute" }} />
-            <Title style={styles.settingsTitle(config.darkMode)}>{block.toUpperCase()} Block Settings</Title>
+            <Title style={styles.title(config.darkMode)}>{block.toUpperCase()} Block Settings</Title>
             <Button mode={"text"} color={config.darkMode? '#fff' : '#000'} style={{ right: 5, position: "absolute" }} onPress={() => {
                 setConfig(cfg);
                 setBlock("");
