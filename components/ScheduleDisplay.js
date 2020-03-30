@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { List, Title, Caption } from 'react-native-paper';
 import MaterialLetter from './MaterialLetter';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { showTime, getCurrentPeriod, formatDate, showDate, showDayType, styles } from './Tools';
+import { showTime, getCurrentPeriod, formatDate, showDate, showDayType, styles, iconColor } from './Tools';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {View} from 'react-native';
+
 function ScheduleDisplay({ darkMode, schedule }) {
   if (!schedule || Object.entries(schedule).length === 0) return <Title style={styles.title}>No School</Title>
   else {
@@ -31,9 +31,9 @@ function ScheduleDisplay({ darkMode, schedule }) {
         key="Homeroom"
         style={styles.periodItem({},{},darkMode)}
         right={()=><Caption style={styles.timeRange(darkMode)}>{showTime(hr.start) + " - " + showTime(hr.end)}</Caption>}
-        left={props => <Entypo size={40} color={darkMode? '#fff' : '#000'}  name="home" />}
-        titleStyle={{color:  darkMode? "#fff" :  "#000"}}
-      />
+        left={() => <Entypo size={40} color={iconColor(darkMode)}  name="home" />}
+        titleStyle={{color: iconColor(darkMode)}}
+        />
     )
     schedule.periods.slice(1).forEach((p, i) => {
       periods.push(<React.Fragment>
@@ -41,9 +41,9 @@ function ScheduleDisplay({ darkMode, schedule }) {
           title={`${p.name}`}
           key={`${p.name}${i}`}
           right={()=><Caption style={styles.timeRange(darkMode)}>{showTime(p.start) + " - " + showTime(p.end)}</Caption>}
-          left={p.block ? (p.block == "Lunch" ? () =><MaterialIcons color={darkMode? '#fff' : '#000'} size={40} name="food-fork-drink" /> : props => <MaterialLetter {...props} darkMode={darkMode}letter={p.block} />) : props => <Entypo size={40} color={darkMode? '#fff' : '#000'}  name="modern-mic" />}
+          left={p.block ? (p.block == "Lunch" ? () =><MaterialIcons color={iconColor(darkMode)} size={40} name="food-fork-drink" /> : props => <MaterialLetter {...props} darkMode={darkMode} letter={p.block} />) : props => <Entypo size={40} color={iconColor(darkMode)}  name="modern-mic" />}
           style={styles.periodItem(p, currentPeriod,darkMode)}
-          titleStyle={{color:  darkMode? "#fff" :  "#000"}}
+          titleStyle={{color: iconColor(darkMode)}}
         />
         
       </React.Fragment>

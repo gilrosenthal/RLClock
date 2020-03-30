@@ -113,6 +113,10 @@ export function showPeriodNumber(period) {
     }
 }
 
+export function iconColor(darkMode){
+    return darkMode? '#fff' : '#000';
+}
+
 export const styles = StyleSheet.create({
     title: darkMode => ({
         textAlign: "center",
@@ -193,6 +197,7 @@ export const styles = StyleSheet.create({
         color: darkMode ? "#f8f8f8" : "#444",
     })
 });
+
 
 export const initialValue = {
     blocks: {
