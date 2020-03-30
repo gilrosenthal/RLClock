@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { List, Title, Caption } from 'react-native-paper';
+import {View} from 'react-native';
+import { List, Title, Caption, Appbar } from 'react-native-paper';
 import MaterialLetter from './MaterialLetter';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { showTime, getCurrentPeriod, formatDate, showDate, showDayType, styles, iconColor } from './Tools';
@@ -62,7 +63,7 @@ function ScheduleDisplay({ darkMode, schedule, setDate }) {
         {schedule.date !== formatDate()
           ? <React.Fragment>
             <View style={styles.settingsTitleRow(darkMode)}>
-              <Appbar.BackAction icon="back" onPress={() => { setDate("") }} />
+              <Appbar.BackAction style={{left:0, position:"absolute"}} icon="back" onPress={() => { setDate("") }} />
               <Title style={styles.title(darkMode)}>{showDate(schedule.date)}</Title>
             </View>
             <Title style={styles.title(darkMode)}>{showDayType(schedule)}</Title>
