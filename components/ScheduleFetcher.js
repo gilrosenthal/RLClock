@@ -29,6 +29,7 @@ function ScheduleFetcher({ config, day, setDate }) {
     }, [])
 
     if (isLoading) return <ActivityIndicator animating={true} color={Colors.red800} />
-    else return <ScrollView style={styles.periodWrapper(config.darkMode)}><ScheduleDisplay setDate={setDate} schedule={data} darkMode={config.darkMode} /></ScrollView>}
+    else return <ScrollView style={styles.periodWrapper(config.darkMode)}><ScheduleDisplay setDate={setDate} schedule={data} darkMode={config.darkMode} /></ScrollView>
+}
 
 export default ScheduleFetcher;

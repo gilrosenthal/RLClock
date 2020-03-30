@@ -67,6 +67,7 @@ function ScheduleDisplay({ darkMode, schedule, setDate }) {
               <Title style={styles.title(darkMode)}>{showDate(schedule.date)}</Title>
             </View>
             <Title style={styles.title(darkMode)}>{showDayType(schedule)}</Title>
+
           </React.Fragment>
           : <React.Fragment>
             <Title style={styles.currentPeriod}>{currentPeriod.name} </Title>

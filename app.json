@@ -27,11 +27,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier":"com.gilrosenthal.rlclock",
-      "buildNumber":"1.0.0"
+      "bundleIdentifier": "com.gilrosenthal.rlclock",
+      "buildNumber": "1.0.0"
     },
-    "android":{
-      "package":"com.gilrosenthal.rlclock"
-    }
-  }
+    "android": {
+      "package": "com.gilrosenthal.rlclock"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "RL Clock",
+  "name": "RLClock"
 }

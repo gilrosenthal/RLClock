@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export function processData(data, config) {
     var processedPeriods = data.periods.map(period => {
@@ -121,7 +121,7 @@ export const styles = StyleSheet.create({
     title: darkMode => ({
         textAlign: "center",
         fontSize: 30,
-        paddingTop: 8.5,
+        paddingTop: 7.5,
         justifyContent: 'center',
         color: darkMode ? "#f8f8f8" : "#444",
     }),
@@ -158,7 +158,6 @@ export const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingTop: StatusBar.currentHeight
     },
     timeRange: darkMode => ({
         fontSize: 15,

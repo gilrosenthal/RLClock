@@ -12,3 +12,9 @@ web-report/
 RLClock/node_modules/*
 # macOS
 .DS_Store
+android/gradle.properties
+android/app/build/intermediates/
+android/.gradle/
+android/.idea/libraries/
+android/app/build/
+android/app/RLClock.keystore
