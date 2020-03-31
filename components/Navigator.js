@@ -11,7 +11,7 @@ function Navigator({ config, setConfig }) {
   const Tab = createMaterialBottomTabNavigator();
   return (
     <NavigationContainer style={styles.periodWrapper(config.darkMode)}>
-      <Tab.Navigator initialRouteName="Today" backBehavior="none" activeColor="#fff" inactiveColor="#fff" barStyle={{ backgroundColor: "#b5302f" }}>
+      <Tab.Navigator initialRouteName="Today" backBehavior="none" activeColor="#fff" inactiveColor="#fff" barStyle={{ backgroundColor: "#b5302f", margin:0, paddingBottom:0, height:50 }}>
         <Tab.Screen name="Today"
           options={{ tabBarIcon: () => (<MaterialIcons color={iconColor(config.darkMode)} size={20} name='school' />) }}
           component={() => <ScheduleFetcher config={config} />} />

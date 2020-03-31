@@ -28,10 +28,13 @@ export function showTime(ts) {
         minute: 'numeric',
         hour12: false
     };
-    var hm = new Date(ts).toLocaleString('en-us', options).split(" ")[3].split(":");
-    var hrs = parseInt(hm[0]);
+    var hm = new Date(ts).toLocaleString('en-us', options)
+    var x = [];
+    if(hm.includes(" ")) x =  hm.split(" ")[3].split(":");
+    else x = hm.split(":");
+    var hrs = parseInt(x[0]);
     if (hrs > 12) hrs = hrs - 12;
-    return hrs + ":" + hm[1];
+    return hrs + ":" + x[1];
 }
 
 export function getCurrentPeriod(schedule) {
@@ -158,6 +161,7 @@ export const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        backgroundColor: "#b5302f"
     },
     timeRange: darkMode => ({
         fontSize: 15,
