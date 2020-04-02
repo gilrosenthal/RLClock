@@ -11,11 +11,7 @@ export default function CalendarScreen({ config }) {
     if (date == "") return <Calendar
         style={styles.periodWrapper(config.darkMode)}
         onDayPress={(day) => setDate("" + day.year + padNumber(day.month) + padNumber(day.day))}
-        theme={{
-            calendarBackground: config.darkMode ? "#444" : "#f8f8f8", //Inverted to rest
-            dayTextColor: config.darkMode ? "#f8f8f8" : "#444",
-            monthTextColor: config.darkMode ? "#f8f8f8" : "#444",
-        }}
+        theme={styles.calendarStyle(config.darkMode)}
     />
     else return <ScrollView style={styles.periodWrapper(config.darkMode)}>
         <ScheduleFetcher config={config} setDate={setDate} day={date} />

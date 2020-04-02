@@ -30,7 +30,7 @@ export default function Main() {
     <PaperProvider>
       <SafeAreaView style={{flex:0, backgroundColor: config.darkMode ? "#444" : "#f8f8f8"}}/>
       <SafeAreaView style={styles.container}>
-        <StatusBar barStyle={config.darkMode? "light-content" : "dark-content"} />
+        <StatusBar backgroundColor={config.darkMode ? "#444" : "#f8f8f8"} barStyle={config.darkMode? "light-content" : "dark-content"} />
         <AppContainer config={config} setConfig={setConf} />
       </SafeAreaView>
     </PaperProvider>

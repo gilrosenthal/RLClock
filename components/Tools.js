@@ -8,7 +8,7 @@ export function processData(data, config) {
         //If not free and has been named
         else if (period.block && period.block !== "Lunch" && config.blocks[period.block.toLowerCase()].name) period.name = config.blocks[period.block.toLowerCase()].name;
 
-        //Some string/date work to convert their format into Date objectys
+        //Some string/date work to convert their format into Date objects
         var s = period.start.split(":").map(el => parseInt(el)); //
         var e = period.end.split(":").map(el => parseInt(el));
         period.start = new Date().setHours(s[0], s[1], 0, 0);
@@ -16,6 +16,7 @@ export function processData(data, config) {
 
         return period;
     });
+
     return {
         name: data.name,
         periods: processedPeriods
@@ -33,12 +34,14 @@ export function getCurrentPeriod(schedule) {
     var currentTS = new Date();
     var currentPeriod;
     var timeToEnd = 0;
-    schedule.periods.forEach((el, index) => {
+    
+    schedule.periods.forEach(el => {
         if (el.start <= currentTS && el.end >= currentTS) {
             timeToEnd = el.end - currentTS;
             currentPeriod = el;
         }
     });
+
     if (!currentPeriod) {
         if (currentTS >= schedule.periods.slice(-1).pop().end) return { currentPeriod: { name: "After School" } }
         else {
@@ -46,7 +49,7 @@ export function getCurrentPeriod(schedule) {
                 if (!p) return c;
                 if (p.start >= c.start) return c;
                 else return p;
-            })
+            });
             return { currentPeriod: { name: `Passing Period before ${n.block}`, nextBlock: n }, timeToEnd: n.start - new Date() }
         }
     }
@@ -58,17 +61,8 @@ export function getCurrentPeriod(schedule) {
 }
 
 export function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join();
+    var d = new Date(date);
+    return [d.getFullYear(), padNumber('' + (d.getMonth() + 1)), padNumber('' + d.getDate())].join();
 }
 
 export function showDate(date) {
@@ -194,6 +188,20 @@ export const styles = StyleSheet.create({
         left: "10%",
         paddingVertical: 20,
         color: darkMode ? "#f8f8f8" : "#444",
+    }), 
+    calendarStyle: darkMode => ({
+        calendarBackground: darkMode ? "#444" : "#f8f8f8", //Inverted to rest
+        dayTextColor: darkMode ? "#f8f8f8" : "#444",
+        monthTextColor: darkMode ? "#f8f8f8" : "#444",
+    }),
+    barStyle:{ backgroundColor: "#b5302f", height:50 },
+    appBarLeft:{ left: 0, position: "absolute" },
+    classNameInput: darkMode=>({
+        colors: {
+            background: darkMode ? "#444" : "#f8f8f8",
+            text: darkMode ? "#f8f8f8" : "#444",
+            placeholder: darkMode ? "#f8f8f8" : "#444",
+        }
     })
 });
 
