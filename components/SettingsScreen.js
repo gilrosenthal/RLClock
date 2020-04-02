@@ -75,13 +75,7 @@ function BlockSettings({ block, setBlock, config, setConfig }) {
                 defaultValue={cfg.blocks[block].name ? cfg.blocks[block].name : null}
                 key={`${block}.input`}
                 style={{ width: "60%", paddingBottom: 20, paddingRight: 10 }}
-                theme={{
-                    colors: {
-                        background: config.darkMode ? "#444" : "#f8f8f8",
-                        text: config.darkMode ? "#f8f8f8" : "#444",
-                        placeholder: config.darkMode ? "#f8f8f8" : "#444",
-                    }
-                }}
+                theme={styles.classNameInput(config.darkMode)}
                 onChangeText={(text) => updateBlockProp(block, text, "name")}
             />
         </View>}

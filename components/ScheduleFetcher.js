@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import ScheduleDisplay from './ScheduleDisplay';
@@ -28,7 +28,7 @@ function ScheduleFetcher({ config, day, setDate }) {
             .catch(error => console.log(error))
     }, [])
 
-    if (isLoading) return <ActivityIndicator animating={true} color={Colors.red800} />
+    if (isLoading) return <ActivityIndicator animating={true} color="#b5302f" />
     else return <ScrollView style={styles.periodWrapper(config.darkMode)}><ScheduleDisplay setDate={setDate} schedule={data} darkMode={config.darkMode} /></ScrollView>
 }
 

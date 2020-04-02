@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import { List, Title, Caption, Appbar } from 'react-native-paper';
 import MaterialLetter from './MaterialLetter';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -30,23 +30,23 @@ function ScheduleDisplay({ darkMode, schedule, setDate }) {
       <List.Item
         title="Homeroom"
         key="Homeroom"
-        style={styles.periodItem({},{},darkMode)}
-        right={()=><Caption style={styles.timeRange(darkMode)}>{showTime(hr.start) + " - " + showTime(hr.end)}</Caption>}
-        left={() => <Entypo size={40} color={iconColor(darkMode)}  name="home" />}
-        titleStyle={{color: iconColor(darkMode)}}
-        />
+        style={styles.periodItem({}, {}, darkMode)}
+        right={() => <Caption style={styles.timeRange(darkMode)}>{showTime(hr.start) + " - " + showTime(hr.end)}</Caption>}
+        left={() => <Entypo size={40} color={iconColor(darkMode)} name="home" />}
+        titleStyle={{ color: iconColor(darkMode) }}
+      />
     )
     schedule.periods.slice(1).forEach((p, i) => {
       periods.push(<React.Fragment>
         <List.Item
           title={`${p.name}`}
           key={`${p.name}${i}`}
-          right={()=><Caption style={styles.timeRange(darkMode)}>{showTime(p.start) + " - " + showTime(p.end)}</Caption>}
-          left={p.block ? (p.block == "Lunch" ? () =><MaterialIcons color={iconColor(darkMode)} size={40} name="food-fork-drink" /> : props => <MaterialLetter {...props} darkMode={darkMode} letter={p.block} />) : props => <Entypo size={40} color={iconColor(darkMode)}  name="modern-mic" />}
-          style={styles.periodItem(p, currentPeriod,darkMode)}
-          titleStyle={{color: iconColor(darkMode)}}
+          right={() => <Caption style={styles.timeRange(darkMode)}>{showTime(p.start) + " - " + showTime(p.end)}</Caption>}
+          left={p.block ? (p.block == "Lunch" ? () => <MaterialIcons color={iconColor(darkMode)} size={40} name="food-fork-drink" /> : props => <MaterialLetter {...props} darkMode={darkMode} letter={p.block} />) : props => <Entypo size={40} color={iconColor(darkMode)} name="modern-mic" />}
+          style={styles.periodItem(p, currentPeriod, darkMode)}
+          titleStyle={{ color: iconColor(darkMode) }}
         />
-        
+
       </React.Fragment>
       )
     }
@@ -63,7 +63,7 @@ function ScheduleDisplay({ darkMode, schedule, setDate }) {
         {schedule.date !== formatDate()
           ? <React.Fragment>
             <View style={styles.settingsTitleRow(darkMode)}>
-              <Appbar.BackAction style={{left:0, position:"absolute"}} icon="back" onPress={() => { setDate("") }} />
+              <Appbar.BackAction style={styles.appBarLeft} icon="back" onPress={() => { setDate("") }} />
               <Title style={styles.title(darkMode)}>{showDate(schedule.date)}</Title>
             </View>
             <Title style={styles.title(darkMode)}>{showDayType(schedule)}</Title>

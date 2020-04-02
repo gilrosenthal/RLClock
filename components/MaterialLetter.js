@@ -11,7 +11,7 @@ export default function MaterialLetter({ darkMode, letter }) {
         fill={darkMode ? "#fff" : "#000"}
         fontSize={290}
         fontWeight={400}
-        fontFamily="Roboto"
+        fontFamily="System"
       >
         {letter}
       </Text>

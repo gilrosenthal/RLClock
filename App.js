@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AppRegistry, SafeAreaView, AsyncStorage, BackHandler } from 'react-native';
+import { AppRegistry, SafeAreaView, AsyncStorage, BackHandler, StatusBar } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import { initialValue, styles } from './components/Tools';
@@ -28,7 +28,9 @@ export default function Main() {
   }
   return (
     <PaperProvider>
+      <SafeAreaView style={{flex:0, backgroundColor: config.darkMode ? "#444" : "#f8f8f8"}}/>
       <SafeAreaView style={styles.container}>
+        <StatusBar backgroundColor={config.darkMode ? "#444" : "#f8f8f8"} barStyle={config.darkMode? "light-content" : "dark-content"} />
         <AppContainer config={config} setConfig={setConf} />
       </SafeAreaView>
     </PaperProvider>
