@@ -23,18 +23,10 @@ export function processData(data, config) {
 }
 
 export function showTime(ts) {
-    var options = {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: false
-    };
-    var hm = new Date(ts).toLocaleString('en-us', options)
-    var x = [];
-    if(hm.includes(" ")) x =  hm.split(" ")[3].split(":");
-    else x = hm.split(":");
-    var hrs = parseInt(x[0]);
-    if (hrs > 12) hrs = hrs - 12;
-    return hrs + ":" + x[1];
+    var hm = new Date(ts)
+    var hrs = hm.getHours();
+    if (hrs > 12) hrs -= 12;
+    return hrs + ":" + padNumber(hm.getMinutes());
 }
 
 export function getCurrentPeriod(schedule) {
@@ -114,6 +106,10 @@ export function showPeriodNumber(period) {
         case 6: return "6th";
         case 7: return "7th";
     }
+}
+
+export function padNumber(num){
+    return (("" + num).length !== 2) ? "0" + num : num
 }
 
 export function iconColor(darkMode){
