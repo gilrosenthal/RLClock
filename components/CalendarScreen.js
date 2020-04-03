@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BackHandler, ScrollView } from 'react-native';
-import { Appbar } from 'react-native-paper';
 import { Calendar } from 'react-native-calendars';
 import { styles, padNumber } from './Tools';
 import ScheduleFetcher from './ScheduleFetcher';

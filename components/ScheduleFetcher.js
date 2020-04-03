@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { ActivityIndicator, Colors } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import ScheduleDisplay from './ScheduleDisplay';
 import { processData, formatDate, styles } from './Tools';
 
