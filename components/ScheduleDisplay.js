@@ -7,7 +7,10 @@ import { showTime, getCurrentPeriod, formatDate, showDate, showDayType, styles, 
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function ScheduleDisplay({ darkMode, schedule, setDate }) {
-  if (!schedule || Object.entries(schedule).length === 0) return <Title style={styles.title}>No School</Title>
+  if (!schedule || Object.entries(schedule).length === 0) return <View style={styles.settingsTitleRow(darkMode)}>
+  <Appbar.BackAction style={styles.appBarLeft} icon="back" onPress={() => { setDate("") }} />
+  <Title style={styles.title(darkMode)}>No School</Title>
+</View>
   else {
 
     var [timeLeft, setTimeLeft] = useState(0);
