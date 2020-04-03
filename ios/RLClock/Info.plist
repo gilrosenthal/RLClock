@@ -46,6 +46,15 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>roxburylatin.org</key>
+			<dict>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
@@ -66,7 +75,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow RL Clock to access your microphone</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Allow RL Clock to access your device's accelerometer</string>
+	<string>Allow RL Clock to access your device&apos;s accelerometer</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Give RL Clock periences permission to save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -74,6 +83,10 @@
 	<key>NSRemindersUsageDescription</key>
 	<string>Allow RL Clock to access your reminders</string>
 	<key>UIAppFonts</key>
-	<array/>
+	<array>
+		<string>MaterialIcons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>Entypo.ttf</string>
+	</array>
 </dict>
 </plist>
